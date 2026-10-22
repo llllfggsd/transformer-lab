@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#142b2a">
+  <title>Transformer Lab · 从第一行开始</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23142b2a'/%3E%3Cpath d='M10 12h20M20 12v18' stroke='%23c8e99c' stroke-width='4'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/static/style.css">
+  <script type="module" src="/static/app.js"></script>
+</head>
+<body class="signed-out">
+  <section id="auth-screen" class="auth-screen" aria-label="账号登录与注册">
+    <div class="auth-intro"><a class="brand" href="/"><span class="brand-mark">T<span>_</span></span><span>TRANSFORMER<small>LEARNING LAB</small></span></a><div class="auth-intro-body"><div class="eyebrow">YOUR OWN LEARNING JOURNEY</div><h1>每一行代码，<br>都是你的进步。</h1><p>从 Python 基础到 Transformer，<br>亲手写下理解，把学习接着进行。</p><div class="auth-code" aria-hidden="true"><span>01</span> learn = "step by step"<br><span>02</span> progress = your_own_journey<br><span>03</span> <em>keep_going()</em></div></div><div class="auth-intro-footer">独立账号 · 个人进度 · 自动保存</div></div>
+    <div class="auth-form-side"><div class="auth-card"><div class="eyebrow">WELCOME TO THE LAB</div><h2 id="auth-title">登录你的学习空间</h2><p id="auth-subtitle">登录后继续上次的学习，进度随账号保存。</p><div class="auth-tabs"><button id="auth-login-tab" type="button" aria-pressed="true">登录</button><button id="auth-register-tab" type="button" aria-pressed="false">注册账号</button></div><form id="auth-form"><label for="auth-username">用户名</label><input id="auth-username" name="username" autocomplete="username" minlength="3" maxlength="32" placeholder="输入用户名" required><label for="auth-password">密码</label><input id="auth-password" name="password" type="password" autocomplete="current-password" minlength="8" maxlength="128" placeholder="输入密码" required><div id="auth-confirm-group" hidden><label for="auth-confirm">确认密码</label><input id="auth-confirm" type="password" autocomplete="new-password" maxlength="128" placeholder="再输入一次密码"></div><p id="auth-register-help" class="auth-help" hidden>用户名 3–32 位，支持中文、字母、数字、下划线、点和短横线；密码 8–128 位。</p><label id="auth-legacy-group" class="auth-legacy" hidden><input id="auth-import-legacy" type="checkbox"><span>将原有本机学习记录和浏览器草稿导入此账号<small>仅首个账号可选，原记录文件会保留。</small></span></label><p id="auth-error" class="auth-error" role="alert" hidden></p><button id="auth-submit" class="auth-submit" type="submit">登录并继续学习 <span>→</span></button></form><p class="auth-footnote">每个账号分别保存草稿、运行结果和阶段进度。<br>当前账号系统运行在这台电脑上。</p></div></div>
+  </section>
+  <div id="learning-app" hidden>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="Transformer Lab 首页"><span class="brand-mark">T<span>_</span></span><span>TRANSFORMER<small>LEARNING LAB</small></span></a>
+    <div class="path-heading">你的学习路径 <span>10 STAGES</span></div>
+    <nav id="stages" aria-label="阶段导航"></nav>
+    <div class="sidebar-bottom"><span class="local-dot"></span> 本地学习空间<span class="local-sub">一步一步，把原理写成代码。</span></div>
+  </aside>
+
+  <div class="workspace">
+    <header class="topbar"><span class="breadcrumb">学习工作台 <span>/</span> <strong id="stage-breadcrumb">阶段 01</strong></span><div class="header-actions"><span class="handmade">⌨ 全程手敲 · 禁止粘贴</span><a id="export-notebook" class="export-link" href="/api/export" download>导出 Notebook <span>↗</span></a><span id="current-username" class="current-user"></span><button id="logout" class="logout-button" type="button">退出登录</button></div></header>
+    <main>
+      <section class="stage-intro">
+        <div><div id="stage-eyebrow" class="eyebrow">FOUNDATIONS / STAGE 01</div><h1 id="stage-title">从第一行 Python 开始<span>。</span></h1><p id="stage-description">看一遍，亲手写一遍，再让代码告诉你答案。</p></div>
+        <div class="stage-progress"><div class="progress-caption"><strong id="progress-count">0 <span>/ 21</span></strong><span>代码段已完成</span></div><div class="progress-track"><div id="progress-fill"></div></div><span id="progress-note">完成代码与验收，继续下一阶段</span></div>
+      </section>
+      <div id="dependency-note" class="dependency-note" hidden></div>
+
+      <nav id="learning-path" class="learning-path" aria-label="本阶段学习环节"></nav>
+
+      <div class="lesson-toolbar"><div><span class="section-dot"></span><strong id="lesson-group">示例跟练</strong><span id="lesson-position">01 / 21</span></div><button id="outline-toggle" class="text-button" aria-expanded="false" aria-controls="outline">示例与练习目录 <span>☷</span></button></div>
+      <div id="outline" class="outline" hidden></div>
+
+      <section class="lesson-overview" aria-label="本段讲解">
+        <div class="lesson-description"><span id="lesson-type" class="pill">PYTHON 基础</span><h2 id="lesson-title">正在加载课程…</h2><div id="lesson-description"></div><p id="evaluation-rule" class="evaluation-rule">通过条件：运行成功，且变量、数值、文字内容及结构正确。忽略空白和字符串中的中英文符号。</p></div>
+        <div class="insight"><span class="insight-icon">↳</span><div><strong id="hint-title">动手之前，先预测一下</strong><p id="lesson-hint">先想想运行结果，再开始输入。</p></div></div>
+      </section>
+
+      <div class="comparison-heading"><span id="comparison-title">示例跟练 · 逐行对照</span><span>相同行号 · 纵向同步 · 当前行高亮</span></div>
+      <section class="lab-grid" aria-label="代码学习区">
+        <article class="reference-panel">
+          <div class="panel-top"><span><span class="panel-number">01</span><span id="reference-title">示例代码</span></span><span class="tiny-label">REFERENCE</span></div>
+          <div class="reference-toolbar"><span><span class="python-icon">Py</span><span id="reference-filename">example.py</span></span><span class="sync-indicator">↔ 纵向同步</span></div>
+          <div class="code-reference"><div class="code-filebar"><span id="reference-caption">只读示例</span><span id="reference-line-count">0 行</span></div><pre id="reference-code" aria-label="参考代码" tabindex="0"></pre><div class="reference-footer"><span id="reference-cursor">对照第 1 行</span><span>空行也保留位置</span></div></div>
+          <div class="reference-guide"><span>↳</span><p id="reference-guide">从左侧第 1 行开始，在右侧相同行号输入。长代码可在任意一侧滚动，另一侧会同步跟随。</p></div>
+        </article>
+
+        <article class="notebook-panel">
+          <div class="panel-top"><span><span class="panel-number">02</span> 手敲代码</span><span class="jupyter-label"><span class="jupyter-orbit">◉</span> JUPYTER</span></div>
+          <div class="kernel-toolbar"><span><span id="kernel-dot" class="kernel-dot"></span><span id="kernel-label">Python 3 · 等待运行</span></span><span class="kernel-actions"><span id="execution-count">[ ]</span><button id="restart" class="icon-button" title="重置内核，保留学习进度" aria-label="重置内核">↻</button></span></div>
+          <div class="notebook-cell"><div class="editor-container"><div class="editor-caption"><span id="cell-caption">在对应行输入左侧示例</span><span id="save-status">自动保存</span></div><div class="editor-viewport"><div class="editor-gutter" aria-hidden="true"><div id="editor-line-numbers"></div></div><div id="editor-scroll"><div class="editor-surface"><pre id="editor-measure" aria-hidden="true"></pre><div id="editor-current-line" aria-hidden="true"></div><textarea id="editor" aria-label="手敲 Python 代码" wrap="off" placeholder="# 从第 1 行开始，亲手写一遍。" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false"></textarea><span id="caret-measure" aria-hidden="true"></span></div></div></div><div class="editor-footer"><span id="line-info">第 1 行 · 第 1 列</span><span>Tab 缩进 · Shift + Enter 运行</span></div></div></div>
+          <div class="run-toolbar"><span class="paste-note"><span>⌨</span> 禁止粘贴 · 逐段练习</span><button id="run" class="run-button"><span>▶</span> 运行代码 <kbd>⇧ ↵</kbd></button></div>
+          <div class="output-section"><div class="output-heading"><span>运行结果</span><span id="output-state">尚未运行</span></div><div id="output" class="output" role="log" aria-live="polite"><div class="output-empty"><span>›_</span><p>每一次运行，都是一次理解。</p><small>输出和错误信息会出现在这里</small></div></div></div>
+          <div id="feedback" class="feedback" aria-live="polite" hidden></div>
+        </article>
+      </section>
+
+      <footer class="lesson-footer"><button id="previous" class="secondary-button">← 上一段</button><span id="completion-note">手敲完整代码并运行，解锁下一段</span><button id="next" class="next-button" disabled>下一段 <span>→</span></button></footer>
+      <section id="quiz" class="quiz-panel" hidden aria-label="阶段验收"></section>
+      <section id="course-resources" class="course-resources" hidden aria-label="章节参考资料"></section>
+      <div class="page-footnote"><span>理解，来自亲手实践。</span><span>TRANSFORMER LAB / LOCAL EDITION</span></div>
+    </main>
+  </div>
+  </div>
+  <div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+jupyter-client
+ipykernel
+numpy
+torch
+transformers
