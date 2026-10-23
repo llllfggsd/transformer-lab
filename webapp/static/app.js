@@ -10,6 +10,25 @@ const draftKey = (id) => draftStorageKey(state.user.id, id);
 const escape = (value) => String(value).replace(/[&<>"']/g, (char) => ({"&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"}[char]));
 const auth = createAuthScreen({onAuthenticated: loadCourse, onSignedOut: clearCourse});
 
+const sidebarPreferenceKey = "transformer-lab:sidebar-collapsed";
+function setSidebarCollapsed(collapsed) {
+  $("#learning-app").classList.toggle("sidebar-collapsed", collapsed);
+  const toggle = $("#sidebar-toggle");
+  const label = collapsed ? "展开左侧导航" : "收起左侧导航";
+  toggle.setAttribute("aria-expanded", String(!collapsed));
+  toggle.setAttribute("aria-label", label);
+  toggle.title = label;
+}
+try {
+  setSidebarCollapsed(localStorage.getItem(sidebarPreferenceKey) === "true");
+} catch { /* 浏览器禁用存储时仍可正常展开、收起。 */ }
+$("#sidebar-toggle").addEventListener("click", () => {
+  const collapsed = !$("#learning-app").classList.contains("sidebar-collapsed");
+  setSidebarCollapsed(collapsed);
+  try { localStorage.setItem(sidebarPreferenceKey, String(collapsed)); }
+  catch { /* 无法保存偏好时保留本次页面的状态。 */ }
+});
+
 async function api(path, options = {}) {
   const response = await fetch(path, {
     ...options,
@@ -47,6 +66,7 @@ function renderState() {
     const button = document.createElement("button");
     button.className = `stage-button${stage.number === state.stage ? " active" : ""}`;
     button.disabled = !stage.available;
+    button.setAttribute("aria-label", `阶段 ${stage.number}：${stage.title}`);
     button.title = stage.available ? `${stage.title} · ${stage.completed}/${stage.total} 段已完成` : "完成上一阶段的示例、练习和验收后解锁";
     button.innerHTML = `<span class="stage-num">${stage.status === "completed" ? "✓" : String(stage.number).padStart(2, "0")}</span><span class="stage-name">${escape(stage.title)}</span><span class="stage-lock">${stage.available ? "" : "⌑"}</span>`;
     if (stage.number === state.stage) button.setAttribute("aria-current", "step");
@@ -348,7 +368,7 @@ editor.addEventListener("beforeinput", (event) => {
 });
 editor.addEventListener("keydown", (event) => {
   if (((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "v") || (event.shiftKey && event.key === "Insert")) return blockPaste(event);
-  if (event.isComposing || busy || loading) return;
+  if (event.isComposing || busy || loading || editor.readOnly) return;
   if (event.shiftKey && event.key === "Enter") {
     event.preventDefault();
     runCode();
@@ -356,6 +376,16 @@ editor.addEventListener("keydown", (event) => {
     event.preventDefault();
     editor.setRangeText("    ", editor.selectionStart, editor.selectionEnd, "end");
     onEdit();
+  } else if (event.key === "Backspace" && !event.ctrlKey && !event.metaKey && !event.altKey && editor.selectionStart === editor.selectionEnd) {
+    const position = editor.selectionStart;
+    const current = editor.value.slice(0, position).split("\n").at(-1);
+    if (/^ +$/.test(current)) {
+      // 与 Tab 的四空格缩进一致，每次退回上一个缩进位置。
+      const count = current.length % 4 || 4;
+      event.preventDefault();
+      editor.setRangeText("", position - count, position, "end");
+      onEdit();
+    }
   } else if (event.key === "Enter") {
     event.preventDefault();
     const current = editor.value.slice(0, editor.selectionStart).split("\n").at(-1);

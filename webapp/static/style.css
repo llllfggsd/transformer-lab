@@ -233,3 +233,31 @@
 .quiz-actions {flex-wrap:wrap}
 .stage-intro>div:first-child {min-width:0}
 .stage-intro p {line-height:1.9}
+
+/* 导航收起后保留阶段入口，工作区同步让出空间。 */
+.topbar-start {display:flex;align-items:center;gap:14px;min-width:0}
+.sidebar-toggle {display:flex;align-items:center;justify-content:center;flex-shrink:0;width:32px;height:32px;padding:0;border:1px solid var(--border);border-radius:6px;background:transparent;color:#60755e}
+.sidebar-toggle:hover {background:#edf2e7;color:var(--green)}
+.sidebar-toggle-arrow {transform-origin:14.5px 12px}
+.sidebar-collapsed .sidebar-toggle-arrow {transform:rotate(180deg)}
+@media(min-width:651px) {
+  .sidebar>.brand,.sidebar>.path-heading,.sidebar-bottom {flex-shrink:0}
+  #stages {min-height:0;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#486354 transparent}
+  .sidebar-collapsed .sidebar {width:72px;padding:32px 12px}
+  .sidebar-collapsed .sidebar>.brand {padding:0;justify-content:center}
+  .sidebar-collapsed .sidebar>.brand>span:last-child,
+  .sidebar-collapsed .path-heading,
+  .sidebar-collapsed .stage-name,
+  .sidebar-collapsed .stage-lock,
+  .sidebar-collapsed .sidebar-bottom {display:none}
+  .sidebar-collapsed #stages {margin-top:32px}
+  .sidebar-collapsed .stage-button {padding:13px 4px;justify-content:center}
+  .sidebar-collapsed .stage-button.active:before {left:0}
+  .sidebar-collapsed .workspace {margin-left:72px}
+  body:not(.signed-out):has(.sidebar-collapsed) .toast {left:calc(50% + 36px)}
+}
+@media(max-width:650px) {
+  .topbar {height:auto;min-height:56px;flex-wrap:wrap;gap:10px;padding-top:10px;padding-bottom:10px}
+  .topbar-start {gap:8px}
+  .sidebar-collapsed #stages {display:none}
+}
